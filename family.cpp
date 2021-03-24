@@ -5,7 +5,7 @@ using namespace std;
 int main()
 {
 	ifstream fin("family.in");
-    ofstream fout("family.out");
+    	ofstream fout("family.out");
 	
 	int n;
 	string one, two;
