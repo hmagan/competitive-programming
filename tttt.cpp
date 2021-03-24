@@ -5,7 +5,7 @@ using namespace std;
 int main()
 {
 	ifstream fin("tttt.in");
-    ofstream fout("tttt.out");
+    	ofstream fout("tttt.out");
 	
 	int board[3][3];
 	vector<int> cows;
