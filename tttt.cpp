@@ -4,88 +4,102 @@ using namespace std;
 
 int main()
 {
-	ifstream fin ("tttt.in");
-	ofstream fout ("tttt.out");
-	//ios::sync_with_stdio(0);
-	//cin.tie(0);
+	ifstream fin("tttt.in");
+    ofstream fout("tttt.out");
 	
 	int board[3][3];
-	vector<int> unique;
+	vector<int> cows;
 	
 	for(int i = 0; i < 3; i++){
+		string row;
+		fin >> row;
 		for(int j = 0; j < 3; j++){
-			char letter;
-			fin >> letter;
-			int num = letter - 'A';
-			board[i][j] = num;
-			bool uni = true;
-			for(int k = 0; k < unique.size(); k++){
-				if(unique[k] == num){
-					uni = false;
+			char cow = row[j];
+			int c = cow - '0';
+			board[i][j] = c;
+			bool good = true;
+			for(int k = 0; k < cows.size(); k++){
+				if(cows[k] == c){
+					good = false;
 					break;
 				}
 			}
-			if(uni){
-				unique.push_back(num);
+			if(good){
+				cows.push_back(c);
 			}
 		}
 	}
 	
-	int ans = 0;
-	for(int i = 0; i < unique.size(); i++){
+	int indiv = 0;
+	for(int i = 0; i < cows.size(); i++){
 		bool good = false;
 		for(int j = 0; j < 3; j++){
-			if(board[j][0] == unique[i] && board[j][1] == board[j][0] && board[j][2] == board[j][1]){
+			if(board[j][0] == cows[i] && board[j][1] == cows[i] && board[j][2] == cows[i]){
 				good = true;
 				break;
 			}
 		}
 		if(good){
-			ans++;
+			indiv++;
 			continue;
 		}
-		good = false;
 		for(int j = 0; j < 3; j++){
-			if(board[0][j] == unique[i] && board[1][j] == board[0][j] && board[2][j] == board[1][j]){
+			if(board[0][j] == cows[i] && board[1][j] == cows[i] && board[2][j] == cows[i]){
 				good = true;
 				break;
 			}
 		}
-		if(good || (unique[i] == board[0][0] && board[1][1] == board[0][0] && board[2][2] == board[1][1]) || (unique[i] == board[0][2] && board[1][1] == board[0][2] && board[2][0] == board[1][1])){
-			ans++;
+		if(good){
+			indiv++;
+			continue;
+		}
+		if(board[0][0] == cows[i] && board[1][1] == cows[i] && board[2][2] == cows[i]){
+			good = true;
+		}
+		if(board[2][0] == cows[i] && board[1][1] == cows[i] && board[0][2] == cows[i]){
+			good = true;
+		}
+		if(good){
+			indiv++;
 		}
 	}
+	fout << indiv << "\n";
 	
-	fout << ans << "\n";
+	int group = 0;
 	
-	ans = 0;
-	for(int i = 0; i < unique.size(); i++){
-		for(int j = i + 1; j < unique.size(); j++){
+	for(int i = 0; i < cows.size(); i++){
+		for(int j = i + 1; j < cows.size(); j++){
 			bool good = false;
 			for(int k = 0; k < 3; k++){
-				if((board[k][0] == unique[i] || board[k][0] == unique[j]) && (board[k][1] == unique[i] || board[k][1] == unique[j]) && (board[k][2] == unique[i] || board[k][2] == unique[j])){
+				if((board[k][0] == cows[i] || board[k][0] == cows[j]) && (board[k][1] == cows[i] || board[k][1] == cows[j]) && (board[k][2] == cows[i] || board[k][2] == cows[j])){
 					good = true;
 					break;
 				}
 			}
 			if(good){
-				ans++;
+				group++;
 				continue;
 			}
-			good = false;
 			for(int k = 0; k < 3; k++){
-				if((board[0][k] == unique[i] || board[0][k] == unique[j]) && (board[1][k] == unique[i] || board[1][k] == unique[j]) && (board[2][k] == unique[i] || board[2][k] == unique[j])){
+				if((board[0][k] == cows[i] || board[0][k] == cows[j]) && (board[1][k] == cows[i] || board[1][k] == cows[j]) && (board[2][k] == cows[i] || board[2][k] == cows[j])){
 					good = true;
 					break;
 				}
 			}
-			if(good || ((board[0][0] == unique[i] || board[0][0] == unique[j]) && (board[1][1] == unique[i] || board[1][1] == unique[j]) && (board[2][2] == unique[i] || board[2][2] == unique[j])) || ((board[0][2] == unique[i] || board[0][2] == unique[j]) && (board[1][1] == unique[i] || board[1][1] == unique[j]) && (board[2][0] == unique[i] || board[2][0] == unique[j]))){
-				ans++;
+			if(good){
+				group++;
+				continue;
+			}
+			if((board[0][0] == cows[i] || board[0][0] == cows[j]) && (board[1][1] == cows[i] || board[1][1] == cows[j]) && (board[2][2] == cows[i] || board[2][2] == cows[j])){
+				good = true;
+			}
+			if((board[2][0] == cows[i] || board[2][0] == cows[j]) && (board[1][1] == cows[i] || board[1][1] == cows[j]) && (board[0][2] == cows[i] || board[0][2] == cows[j])){
+				good = true;
+			}
+			if(good){
+				group++;
 			}
 		}
 	}
-	
-	fout << ans;
-	
-	return 0;
+	fout << group;
 }
