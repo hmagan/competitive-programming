@@ -5,7 +5,7 @@ using namespace std;
 int main()
 {
 	ifstream fin("tttt.in");
-    	ofstream fout("tttt.out");
+	ofstream fout("tttt.out");
 	
 	int board[3][3];
 	vector<int> cows;
@@ -67,13 +67,26 @@ int main()
 	
 	int group = 0;
 	
+	//ugly but it works
 	for(int i = 0; i < cows.size(); i++){
 		for(int j = i + 1; j < cows.size(); j++){
 			bool good = false;
+			bool one = false;
+			bool two = false;
 			for(int k = 0; k < 3; k++){
+				one = false;
+				two = false;
 				if((board[k][0] == cows[i] || board[k][0] == cows[j]) && (board[k][1] == cows[i] || board[k][1] == cows[j]) && (board[k][2] == cows[i] || board[k][2] == cows[j])){
-					good = true;
-					break;
+					if(board[k][0] == cows[i] || board[k][1] == cows[i] || board[k][2] == cows[i]){
+						one = true;
+					}
+					if(board[k][0] == cows[j] || board[k][1] == cows[j] || board[k][2] == cows[j]){
+						two = true;
+					}
+					if(one && two){
+						good = true;
+						break;
+					}
 				}
 			}
 			if(good){
@@ -81,9 +94,19 @@ int main()
 				continue;
 			}
 			for(int k = 0; k < 3; k++){
+				one = false;
+				two = false;
 				if((board[0][k] == cows[i] || board[0][k] == cows[j]) && (board[1][k] == cows[i] || board[1][k] == cows[j]) && (board[2][k] == cows[i] || board[2][k] == cows[j])){
-					good = true;
-					break;
+					if(board[0][k] == cows[i] || board[1][k] == cows[i] || board[2][k] == cows[i]){
+						one = true;
+					}
+					if(board[0][k] == cows[j] || board[1][k] == cows[j] || board[2][k] == cows[j]){
+						two = true;
+					}
+					if(one && two){
+						good = true;
+						break;
+					}
 				}
 			}
 			if(good){
@@ -91,9 +114,31 @@ int main()
 				continue;
 			}
 			if((board[0][0] == cows[i] || board[0][0] == cows[j]) && (board[1][1] == cows[i] || board[1][1] == cows[j]) && (board[2][2] == cows[i] || board[2][2] == cows[j])){
-				good = true;
+				one = false;
+				two = false;
+				if(board[0][0] == cows[i] || board[1][1] == cows[i] || board[2][2] == cows[i]){
+					one = true;
+				}
+				if(board[0][0] == cows[j] || board[1][1] == cows[j] || board[2][2] == cows[j]){
+					two = true;
+				}
+				if(one && two){
+					good = true;
+				}
+			}
+			if(good){
+				group++;
+				continue;
 			}
 			if((board[2][0] == cows[i] || board[2][0] == cows[j]) && (board[1][1] == cows[i] || board[1][1] == cows[j]) && (board[0][2] == cows[i] || board[0][2] == cows[j])){
+				one = false;
+				two = false;
+				if(board[2][0] == cows[i] || board[1][1] == cows[i] || board[0][2] == cows[i]){
+					one = true;
+				}
+				if(board[2][0] == cows[j] || board[1][1] == cows[j] || board[0][2] == cows[j]){
+					two = true;
+				}
 				good = true;
 			}
 			if(good){
