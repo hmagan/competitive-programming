@@ -35,7 +35,7 @@ int main()
 		}
 	}
 	
-	for(int i = 0; i < k % count; k++){
+	for(int i = 0; i < k % count; i++){
 		reverse(cows.begin()+steps[0][0]-1, cows.begin()+steps[0][1]);
 		reverse(cows.begin()+steps[1][0]-1, cows.begin()+steps[1][1]);
 	}
