@@ -14,11 +14,11 @@ int main()
 			cin >> a[i];
 		}
 		
+		sort(a, a + n);
+
 		int min_val = 9999999;
-		for(int i = 0; i < n; i++){
-			for(int j = i+1; j < n; j++){
-				min_val = min(min_val, ((a[i] & a[j]) ^ (a[i] | a[j])));
-			}
+		for(int i = 0; i < n-1; i++){
+			min_val = min(min_val, a[i] ^ a[i+1]);
 		}
 		
 		cout << min_val << "\n";
