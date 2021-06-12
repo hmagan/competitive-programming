@@ -31,12 +31,8 @@ int main()
 			l = r;
 		}
 		if(x[l] - x[i] <= d){
-			if(l - i == 2){
-				ans++;
-			} else {
-				long long t = l - (i + 1);
-				ans += t * (t + 1) / 2;
-			}
+			long long t = l - (i + 1);
+			ans += t * (t + 1) / 2;
 		}	
 	}
 	cout << ans << "\n";
