@@ -68,13 +68,6 @@ int main()
 
 		bool good = true;
 		while(!q.empty()){
-			//cout << "CURR GRID: \n";
-			//for(int i = 0; i < n; i++){
-			//	for(int j = 0; j < m; j++){
-			//		cout << grid[i][j];
-			//	}
-			//	cout << "\n";
-			//}
 			pair<int, int> curr = q.front();
 			q.pop();
 			for(int i = 0; i < 4; i++){
